@@ -1,66 +1,35 @@
 //express - node framework, fs - node module folders work
 const express = require("express");
-const fs = require("fs");
-    
+
 const app = express();
-const jsonParser = express.json();
 
-const MongoClient = require("mongodb").MongoClient;
-const dbUrl = "mongodb://localhost:27017/";
-const mongoClient = new MongoClient(dbUrl);
+// parse x-www-form-urlencoded and json
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// db functions 
-async function addUser(user) {
-    try {
-        await mongoClient.connect();
-        const db = mongoClient.db("kiradb");
-        const collection = db.collection("users");
-        const result = await collection.insertOne(user);
-        console.log(result);
-        console.log(user);
-    } catch(err) {
-        console.log(err);
-    } finally {
-        await mongoClient.close();
-    }
-}
-
-async function getUsers() {
-    try {
-        await mongoClient.connect();
-        const db = mongoClient.db("kiradb")
-        const collection = db.collection("users")
-        const results = await collection.find().toArray();
-        return results;
-    } catch(err) {
-        console.log(err);
-    } finally {
-        await mongoClient.close();
-    }
-}
-
-
-//rest api
-app.use(express.static(__dirname + "/public"));
-  
-//получение списка пользователей
-app.get("/api/users", async function(req, res){
-    const users = await getUsers()
-    res.send(users)
+// simple route 
+app.get('/', function(request, response){
+    response.sendFile(__dirname + '/html/index.html');
 });
 
-// получение отправленных данных
-app.post("/api/users", jsonParser, function (req, res) {
-    console.log(req.body);
-      
-    if(!req.body || !req.body.email || !req.body.password) return res.sendStatus(400);
-    
-    const userEmail = req.body.email;
-    const userPassword = req.body.password;
-    let user = {email: userEmail, password: userPassword};
-    addUser(user)
-});
+const db = require("./app/models");
+db.mongoose
+    .connect(db.url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => {
+        console.log("Connected to the database!");
+    })
+    .catch(err => {
+        console.log("Cannot connect to the database!", err);
+        process.exit();
+    });
+
+
+require('./app/routes/user.routes.js')(app);
+require('./app/mqtt/index')
 
 app.listen(3000, function(){
-    console.log("Сервер ожидает подключения...");
+    console.log("Server start!");
 });
