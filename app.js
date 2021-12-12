@@ -1,5 +1,6 @@
 //express - node framework, fs - node module folders work
 const express = require("express");
+const config = require('./app/config/server.config')
 
 const app = express();
 
@@ -27,9 +28,8 @@ db.mongoose
     });
 
 
-require('./app/routes/user.routes.js')(app);
+require('./app/routes/user.routes')(app);
+require('./app/routes/device.routes')(app)
 require('./app/mqtt/index')
 
-app.listen(3000, function(){
-    console.log("Server start!");
-});
+app.listen(config.host, config.startFuncion);

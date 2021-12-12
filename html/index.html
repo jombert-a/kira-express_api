@@ -21,24 +21,50 @@
             <button type="submit">
                 Отправить
             </button>
-        </div>
+        </form>
+        
+        <form onsubmit="return onSubmitSendDevice(event)"> 
+            <h4>Добавление устройства</h4>
+            <label>
+                <p>email</p>
+                <input type="text" id="sendDeviceEmail">
+            </label>
+            <label>
+                <p>serial</p>
+                <input type="text" id="sendDeviceSerial">
+            </label> 
+            <button type="submit">
+                Отправить
+            </button>
+        </form>
     </div>
 </body>
 </html>
 
 <script>
     function onSubmitSendUser(e) {
-        e && e.preventDefault()
-        alert('Отправка пользователя')
+        e && console.log(e);
         let email = document.querySelector('#sendUserEmail').value
         let password = document.querySelector('#sendUserPassword').value
         console.log(name, password);
-        fetch('/api/users', {
+        fetch('/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({email, password})
+        })
+    }
+    function onSubmitSendDevice(e) {
+        e && e.preventDefault()
+        let email = document.querySelector('#sendDeviceEmail').value
+        let serial = document.querySelector('#sendDeviceSerial').value
+        fetch('/api/device', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({email, serial})
         })
     }
 </script>
