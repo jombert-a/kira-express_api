@@ -1,5 +1,15 @@
 const db = require("../models");
 const User = db.User;
+const Role = db.Role;
+
+const validator = require("../validator")
+const bcrypt = require("bcryptjs")
+
+const {secret_key} = require("../config/server.config")
+const jwt = require("jsonwebtoken")
+
+const generateAccessToken = (id, roles) => jwt.sign({id, roles}, secret_key, {expiresIn: "24h"})
+
 
 exports.findAll = function (req, res) {
     User.find()
@@ -14,24 +24,56 @@ exports.findAll = function (req, res) {
         })
 }
 
-exports.createUser = function (req, res) {
-    if (!req.body.email && !req.body.password) {
-        res.status(400).send({message: "empty content"})
-        return;
+/**
+ * Registration
+ * @param {string} email - email of user 
+ * @param {string} password - password of user 
+ * @throws 1 - email is empty
+ * @throws 2 - password is empty
+ * @throws 3 - email is not valid
+ * @throws 4 - password is not valid
+ * @throws 5 - email is already registered
+ */
+exports.createUser = async function (req, res) {
+    try {
+        const {email, password} = req.body
+    
+        //validation
+        if (!email) throw 1
+        if (!password) throw 2
+
+        if (!validator.email(email)) throw 3
+        if (!validator.password(password)) throw 4
+
+        const condidate = await User.findOne({email})
+        if (condidate) throw 5
+
+        //registration
+        const hashPassword = bcrypt.hashSync(password, 7)
+        const role = await Role.findOne({value: "USER"})
+        const user = new User({email, password: hashPassword, roles: [role.value]})
+        
+        await user.save(user)
+        res.status(200).send()
+
+    } catch (e) {
+        res.status(400).send({code: e})
     }
+}
 
-    const user = new User({
-        email: req.body.email,
-        password: req.body.password
-    })
-
-    user.save(user)
-        .then(data => {
-            res.send(data)
-        }) 
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || 'some error'
-            })
-        })
+exports.login = async function (req, res) {
+    try {
+        const {email, password} = req.body
+        //validation
+        if (!email) throw 1
+        if (!password) throw 2
+        const condidate = await User.findOne({email})
+        if (!condidate) throw 3
+        const validPassword = bcrypt.compareSync(password, condidate.password)
+        if (!validPassword) throw 4
+        const token = generateAccessToken(condidate._id, condidate.roles)
+        res.send(token)
+    } catch (e) {
+        res.status(400).send({code: e})
+    }
 }

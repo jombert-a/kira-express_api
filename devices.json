@@ -1,0 +1,14 @@
+[
+    {
+        "name": "testDevice",
+        "scheme": {
+            "led": "Boolean",
+            "state": "Boolean",
+            "uuid": "String"
+        },
+        "fkey": [
+            {"ref": "user", "type": "ObjectId"}
+        ],
+        "timestamp": true
+    }
+]

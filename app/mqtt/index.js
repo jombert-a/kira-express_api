@@ -6,7 +6,7 @@ var client = mqtt.connect(mqttConfig);
 
 //setup the callbacks
 client.on('connect', function () {
-    console.log('Connected');
+    console.log('Connected to the mqtt broker!');
 });
 
 client.on('error', function (error) {
@@ -22,6 +22,6 @@ client.on('message', function (topic, message) {
 client.subscribe('#');
 
 // publish message 'Hello' to topic 'my/test/topic'
-client.publish('my/test/topic', 'Hello');
+// client.publish('led', '0');
 
 module.exports = client

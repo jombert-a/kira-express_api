@@ -13,6 +13,14 @@ app.get('/', function(request, response){
     response.sendFile(__dirname + '/html/index.html');
 });
 
+//documentaion
+app.get('/doc', function(request, response) {
+    response.sendFile(__dirname + '/out/index.html')
+})
+app.get('/global.html', function(request, response) {
+    response.sendFile(__dirname + '/out/global.html')
+})
+
 const db = require("./app/models");
 db.mongoose
     .connect(db.url, {
@@ -28,8 +36,9 @@ db.mongoose
     });
 
 
-require('./app/routes/user.routes')(app);
+require('./app/routes/user.routes')(app)
 require('./app/routes/device.routes')(app)
+require('./app/routes/admin.routes')(app)
 require('./app/mqtt/index')
 
 app.listen(config.host, config.startFuncion);

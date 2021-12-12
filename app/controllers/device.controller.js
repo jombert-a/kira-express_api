@@ -1,6 +1,8 @@
 const db = require("../models");
 const Device = db.Device;
 
+const mqtt = require('../mqtt')
+
 exports.findAll = function (req, res) {
     Device.find()
         .then(data => {
@@ -27,16 +29,25 @@ exports.regDevice = function (req, res) {
                 user: data._id
             })
 
-            console.log(device, data);
-
-            // device.save(device)
-            //     .then(data => {
-            //         res.send(data)
-            //     }) 
-            //     .catch(err => {
-            //         res.status(500).send({
-            //             message: err.message || 'some error'
-            //         })
-            //     })
+            device.save(device)
+                .then(data => {
+                    res.send(data)
+                }) 
+                .catch(err => {
+                    res.status(500).send({
+                        message: err.message || 'some error'
+                    })
+                })
         })
+}
+
+exports.toggleLed = function (req, res) {
+    if (!req.body.status)  {
+        res.status(400).send({message: "empty content or not correct status"})
+        return;
+    }
+
+
+    mqtt.publish('led', req.body.status)
+    res.send({status: 200})
 }
