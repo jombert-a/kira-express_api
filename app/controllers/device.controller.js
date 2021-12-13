@@ -3,6 +3,14 @@ const Device = db.Device;
 
 const mqtt = require('../mqtt')
 
+// var TestDevice = db.testDevice
+// var testDivice = new TestDevice({
+//     led: false,
+//     stove: false,
+//     uuid: "0"
+// })
+// testDivice.save(testDivice)
+
 exports.findAll = function (req, res) {
     Device.find()
         .then(data => {

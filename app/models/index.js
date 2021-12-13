@@ -9,5 +9,6 @@ db.url = dbConfig.url;
 db.User = require("./user.models.js")(mongoose)
 db.Device = require("./device.models.js")(mongoose)
 db.Role = require("./role.models.js")(mongoose)
+db.testDevice = require("./testDevice.models")(mongoose)
 
 module.exports = db

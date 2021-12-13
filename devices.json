@@ -4,11 +4,13 @@
         "scheme": {
             "led": "Boolean",
             "state": "Boolean",
-            "uuid": "String"
+            "stove": "Boolean",
+            "uuid": "String",
+            "user": {
+                "type": "mongoose.Schema.Types.ObjectId", 
+                "ref": "'user'"
+            }
         },
-        "fkey": [
-            {"ref": "user", "type": "ObjectId"}
-        ],
         "timestamp": true
     }
 ]

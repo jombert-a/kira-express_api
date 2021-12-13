@@ -4,15 +4,22 @@ exports.readDevices = function (req, res) {
     fs.readFile("../kira/devices.json", "utf-8", (err, data) => {
         if (err) {
             console.error(err)
+            res.status(500).send({
+                message:
+                    err.message || "Some errors"
+            })
             return
         }
 
         JSON.parse(data).forEach(element => {
+            const jsonSceme = JSON.stringify(element.scheme)
+            const unquotedSceme = jsonSceme.replace(/"([^"]+)"/g, '$1');
+
             const model = `module.exports = mongoose => {
                 const ${element.name} = mongoose.model(
                   "${element.name}",
                   mongoose.Schema(
-                    ${JSON.stringify(element.scheme)},
+                    ${unquotedSceme},
                     { timestamps: ${element.timestamp} }
                   )
                 );
@@ -30,7 +37,6 @@ exports.readDevices = function (req, res) {
             })
         });
 
-        console.log(data)
-        res.send(data)
+        res.send()
     })
 }

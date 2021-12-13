@@ -2,7 +2,10 @@
 const express = require("express");
 const config = require('./app/config/server.config')
 
-const app = express();
+const app = express(),
+      server = require('http').createServer(app)
+      io = require('socket.io')(server);
+
 
 // parse x-www-form-urlencoded and json
 app.use(express.json());
@@ -41,4 +44,11 @@ require('./app/routes/device.routes')(app)
 require('./app/routes/admin.routes')(app)
 require('./app/mqtt/index')
 
-app.listen(config.host, config.startFuncion);
+io.on('connection', (socket) => {
+    socket.on('chat message', msg => {
+      io.emit('chat message', msg);
+    });
+  });
+
+
+server.listen(config.host, config.startFuncion);
