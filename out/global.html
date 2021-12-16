@@ -104,7 +104,7 @@
     
 
     
-    <h4 class="name" id="createUser"><span class="type-signature"></span>createUser<span class="signature">(email, password)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getUser"><span class="type-signature"></span>getUser<span class="signature">(token)</span><span class="type-signature"></span></h4>
     
 
     
@@ -112,7 +112,166 @@
 
 
 <div class="description">
-    Registration
+    get user
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>token</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Bearer {{token}}</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="user.controller.js.html">user.controller.js</a>, <a href="user.controller.js.html#line94">line 94</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+    <div class="param-desc">
+    
+        0 - not auth
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc">
+    
+        1 - user not found
+    
+    </div>
+
+</li>
+    </ul>
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="login"><span class="type-signature"></span>login<span class="signature">(email, password)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    login
 </div>
 
 
@@ -228,7 +387,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="user.controller.js.html">user.controller.js</a>, <a href="user.controller.js.html#line25">line 25</a>
+        <a href="user.controller.js.html">user.controller.js</a>, <a href="user.controller.js.html#line71">line 71</a>
     </li></ul></dd>
     
 
@@ -257,7 +416,7 @@
 
     <div class="param-desc">
     
-        0 - email is empty
+        1 - email is empty
     
     </div>
 
@@ -267,7 +426,7 @@
 
     <div class="param-desc">
     
-        1 - password is empty
+        2 - password is empty
     
     </div>
 
@@ -277,7 +436,225 @@
 
     <div class="param-desc">
     
-        2 - email is already registered
+        3 - email is not valid
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc">
+    
+        4 - password is not valid
+    
+    </div>
+
+</li>
+    </ul>
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="registration"><span class="type-signature"></span>registration<span class="signature">(email, password)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">email of user</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">password of user</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="user.controller.js.html">user.controller.js</a>, <a href="user.controller.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+    <div class="param-desc">
+    
+        1 - email is empty
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc">
+    
+        2 - password is empty
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc">
+    
+        3 - email is not valid
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc">
+    
+        4 - password is not valid
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc">
+    
+        5 - email is already registered
     
     </div>
 
@@ -306,13 +683,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#createUser">createUser</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#getUser">getUser</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#registration">registration</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Dec 12 2021 20:06:47 GMT+0500 (Екатеринбург, стандартное время)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 17 2021 01:57:40 GMT+0500 (Екатеринбург, стандартное время)
 </footer>
 
 <script> prettyPrint(); </script>

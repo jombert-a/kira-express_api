@@ -1,16 +1,15 @@
-[
-    {
-        "name": "testDevice",
-        "scheme": {
-            "led": "Boolean",
-            "state": "Boolean",
-            "stove": "Boolean",
-            "uuid": "String",
-            "user": {
-                "type": "mongoose.Schema.Types.ObjectId", 
-                "ref": "'user'"
-            }
-        },
-        "timestamp": true
-    }
-]
+[{
+    "name": "testDevice",
+    "scheme": {
+        "online": "Boolean",
+        "led": "Boolean",
+        "state": "Boolean",
+        "stove": "Boolean",
+        "uuid": "String",
+        "user": {
+            "type": "mongoose.Schema.Types.ObjectId",
+            "ref": "'user'"
+        }
+    },
+    "timestamp": true
+}]

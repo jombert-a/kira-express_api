@@ -3,26 +3,22 @@ const express = require("express");
 const config = require('./app/config/server.config')
 
 const app = express(),
-      server = require('http').createServer(app)
-      io = require('socket.io')(server);
+    server = require('http').createServer(app)
+io = require('socket.io')(server);
 
 
 // parse x-www-form-urlencoded and json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//staic
+app.use(express.static('public'));
+app.use(express.static('out'));
+
 // simple route 
-app.get('/', function(request, response){
+app.get('/simple', function(request, response) {
     response.sendFile(__dirname + '/html/index.html');
 });
-
-//documentaion
-app.get('/doc', function(request, response) {
-    response.sendFile(__dirname + '/out/index.html')
-})
-app.get('/global.html', function(request, response) {
-    response.sendFile(__dirname + '/out/global.html')
-})
 
 const db = require("./app/models");
 db.mongoose
@@ -46,9 +42,9 @@ require('./app/mqtt/index')
 
 io.on('connection', (socket) => {
     socket.on('chat message', msg => {
-      io.emit('chat message', msg);
+        io.emit('chat message', msg);
     });
-  });
+});
 
 
 server.listen(config.host, config.startFuncion);
