@@ -1,11 +1,13 @@
-//express - node framework, fs - node module folders work
+//express - node framework
 const express = require("express");
-const config = require('./app/config/server.config')
+const config = require('./app/config/server.config');
+const cors = require('cors');
 
 const app = express(),
-    server = require('http').createServer(app)
-io = require('socket.io')(server);
+    server = require('http').createServer(app);
 
+//socket
+io = require('socket.io')(server);
 
 // parse x-www-form-urlencoded and json
 app.use(express.json());
@@ -14,6 +16,13 @@ app.use(express.urlencoded({ extended: true }));
 //staic
 app.use(express.static('public'));
 app.use(express.static('out'));
+
+//cors
+const corsOptions = {
+    origin: config.site_url,
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 // simple route 
 app.get('/simple', function(request, response) {
